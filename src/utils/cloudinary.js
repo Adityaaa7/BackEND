@@ -24,7 +24,8 @@ import { log } from "console";
             resource_type:"auto"
         })
         //file ahs been uploaded successfullly
-        console.log("File is uploaded on cloudianary",response.url);
+        // console.log("File is uploaded on cloudianary",response.url);
+        fs.unlinkSync(localFilePath)
         return response
     } 
     
@@ -37,4 +38,4 @@ import { log } from "console";
    
    
    
-   export {uploadOnCloudinary}
+   export { uploadOnCloudianry }

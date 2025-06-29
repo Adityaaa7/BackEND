@@ -29,7 +29,10 @@ app.use("/api/v1/users", userRouter)       //now it will transfer control to use
     // when a request comes on /users app will pass it to routes, then when we go to /register it will passs it to 
     // registerUser in user controller and when we go to controller it passes it to async handler's highr order function
 
-
+    app.get("/ping", (req, res) => {
+        res.send("pong");
+      });
+      
 
 
 

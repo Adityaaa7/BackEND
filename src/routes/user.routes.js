@@ -8,7 +8,7 @@ const router = Router()
 router.route("/register").post(
     upload.fields([                                   // middleware start
         {
-            name:"avtar",
+            name:"avatar",
             maxCount:1
         },
         {
