@@ -62,7 +62,7 @@ userSchema.pre("save", async function(next){
 
     if(this.isModified("password")) return next();
 
-    this.password = bcrypt.hash(this.password,10)  //(kya hash kru,kitne round)
+    this.password =await bcrypt.hash(this.password,10)  //(kya hash kru,kitne round)
     next()        //this code execute and change pass every time we do changes in anything lets say fullname it will change pass for this we use if condition
 }) 
                                         //mongoDB allows to add custom methods 
