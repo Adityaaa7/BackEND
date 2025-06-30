@@ -16,7 +16,7 @@ import { log } from "console";
     //upload : lets create a method which will take path of local file as parameter and well upload it if successfully upload then well unlink it from file system
    
    //method
-   const uploadOnCloudianry = async (localFilePath) =>{
+   const uploadOncloudinary= async (localFilePath) =>{
     try {
         if(!localFilePath) return null
         //upload on cloudianry
@@ -38,4 +38,4 @@ import { log } from "console";
    
    
    
-   export { uploadOnCloudianry }
+   export { uploadOncloudinary }

@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import {ApiError} from "../utils/ApiError.js"
 import {User} from '../models/user.model.js' 
-import {uploadOnCloudianry} from '../utils/cloudinary.js'  
+import {uploadOncloudinary} from '../utils/cloudinary.js'  
 import { ApiResponse } from "../utils/ApiResponce.js";      
 
 
@@ -45,6 +45,8 @@ const registerUser = asyncHandler( async (req,res) =>{
             throw new ApiError(409, "User with this username or email already exists")
         }
 
+
+
         console.log(req.files);
 
                                                     //4.check for images check for avtar              
@@ -53,28 +55,28 @@ const registerUser = asyncHandler( async (req,res) =>{
         //  const coverImageLocalPath = req.files?.coverImage[0]?.path;  
 
         let coverImageLocalPath;
-        if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.lenght > 0){
+        if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0){
             coverImageLocalPath =req.files.coverImage[0].path
         }
          
          if(!avatarLocalPath){
-            throw new ApiError(400,"Avtar file is required")
+            throw new ApiError(400,"Avatar file is required")
          }
                                                        //5.upload them to cloudinary for avtar
 
-        const avatar = await uploadOnCloudianry(avatarLocalPath);
-        const coverImage = await uploadOnCloudianry(coverImageLocalPath);
+        const avatar = await uploadOncloudinary(avatarLocalPath);
+        const coverImage = await uploadOncloudinary(coverImageLocalPath);
 
         if(!avatar){
-            throw new ApiError(400,"Avtar file is required")
+            throw new ApiError(400,"Avatar file is required")
         }
 
-
+        console.log("avtar",avatar);
                                                         //6.create user object - create entry in db
 
        const user = await User.create({
             fullname,
-            avatar: avtar.url,
+            avatar: avatar.url,
             coverImage: coverImage?.url || ""  ,  //no validation and compultion on coverIamge
             email,
             password,
