@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken"
 import { accessSync } from "fs";
 import { threadCpuUsage } from "process";
 import { subscribe } from "diagnostics_channel";
+import mongoose from "mongoose";
 
 
 
@@ -461,6 +462,65 @@ const getUserChannelProfile = asyncHandler(async(req,res) => {
     )
 })
 
+//get watch history
+const getWatchHistory = asyncHandler(async(req,res) =>{
+    const user = await User.aggregate([
+        {
+            $match:{
+                _id: new mongoose.Types.ObjectId(req.user._id)
+            }
+        },
+        {
+            $lookup:{
+                from:"videos",
+                localField:"watchHistory",
+                foreignField:"_id",
+                as:"watchHistory",
+                // until this was for history 
+                // now we'll write one more sub pipeline to get owner details as well
+                pipeline:[
+                    {
+                        $lookup:{
+                            from:"users",             //remeber mongoose lowercases and plurals the exported name
+                            localField:"owner",
+                            foreignField:"_id",
+                            as:"owner",
+                            // another nested pipeline to get only necessary data in history as username owner and not password etc
+
+                            pipeline:[
+                                 {
+                                    $project:{
+                                        fullname:1,
+                                        username:1,
+                                        avatar:1
+                                    }
+                                 }]
+                        }
+                    },
+                    //we'll get a owner array and at its 1st position we'll get all this projection data
+                    //but to clearify or beutify it we'll do this
+                    {
+                        $addFields:{
+                            owner:{
+                                $first:"$owner"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ])
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            user[0].watchHistory,
+            "Watch history fetched successfully"
+        )
+    )
+})
 
 export {registerUser,
         loginUser,
@@ -471,4 +531,5 @@ export {registerUser,
         updateAccountDetails,
         updateUserAvatar,
         updateUserCoverImage,
-        getUserChannelProfile}
+        getUserChannelProfile,
+        getWatchHistory}
