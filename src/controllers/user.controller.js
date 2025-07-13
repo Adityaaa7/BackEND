@@ -36,7 +36,6 @@ const generateAccessAndRefreshTokens = async(userId)=>{
 
 
 
-
 const registerUser = asyncHandler( async (req,res) =>{
    //steps 
    //get user details from the frontend
@@ -133,7 +132,7 @@ const registerUser = asyncHandler( async (req,res) =>{
         )                                                    
 })
 
-                                        //LOGIN
+//LOGIN
 const loginUser = asyncHandler(async (req,res) =>{
         //steps
         //bring data from req.body
@@ -194,7 +193,6 @@ const loginUser = asyncHandler(async (req,res) =>{
         )
 
 }) 
-
 
 //logout
 const logoutUser = asyncHandler(async(req,res) =>{
@@ -272,8 +270,6 @@ const refreshAccessToken = asyncHandler(async(req,res)=>{
    }
 
 })
-
-
 
 // change password
 const changeCurrentPassword = asyncHandler(async(req,res) =>{

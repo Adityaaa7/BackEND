@@ -55,8 +55,8 @@ const userSchema = new Schema(
 
                                         // PASSWORD ENCRYPTION
 
-  // here pre is a middleware which is used to execute perticular function just brfore saving it, also as it is a middleware we have to store next 
-// dont use arrow functions in here as they dont have reference for 'this'  also this function takes time so use async 
+    // here pre is a middleware which is used to execute perticular function just brfore saving it, also as it is a middleware we have to store next 
+    // dont use arrow functions in here as they dont have reference for 'this'  also this function takes time so use async 
 userSchema.pre("save", async function(next){
 
 
