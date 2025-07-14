@@ -1,5 +1,14 @@
 //this method only verify ki user ahi ya nahi hai
 
+//steps:
+//1.access the token from cookie or header
+//2.docode the token
+//3.find the user based on decoded token
+//4.update user in req.body
+//5.next() 
+
+
+
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken"
